@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'AMKApplicationDelegate_Example' do
+  pod 'AMKApplicationDelegate', :path => '../'
+
+  target 'AMKApplicationDelegate_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
