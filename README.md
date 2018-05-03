@@ -1,0 +1,2 @@
+# AMKApplicationDelegate
+无侵入实现AppDelegate瘦身
