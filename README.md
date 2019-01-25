@@ -342,7 +342,7 @@ NSString * const AMKApplicationShortcutItemMessageUserInfoKey = @"message";
 
 ### 执行结果
 
-![demo.gif](https://upload-images.jianshu.io/upload_images/294630-3b5531a5137189d3.gif?imageMogr2/auto-orient/strip)
+![](https://github.com/AndyM129/AMKApplicationDelegate/blob/master/demo.gif?raw=true)
 
 > 图片有点大，若加载失败 请前往如下地址查看：
 > https://github.com/AndyM129/AMKApplicationDelegate/blob/master/demo.gif 
