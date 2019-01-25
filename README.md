@@ -13,15 +13,11 @@
 > 本文原文地址：[https://www.jianshu.com/p/666cbd2b7ec8](https://www.jianshu.com/p/666cbd2b7ec8)
 > 代码地址：[https://github.com/AndyM129/AMKApplicationDelegate](https://github.com/AndyM129/AMKApplicationDelegate)
 
-
-
 ## 背景
 
 在iOS项目的开发中，AppDelegate是一个耦合发生的重灾地，很多项目的开发时间一长，AppDelegate就不可避免地出现，代码臃肿，调用顺序混乱，逻辑复杂的问题。
 
 因此，可通过 `AMKApplicationDelegate` 无侵入的实现AppDelegate瘦身。
-
-
 
 ## AppDelegate瘦身 之  AMKApplicationDelegate
 
@@ -33,8 +29,6 @@
 
 - 后期维护时，一段代码写在哪里更合理，需要研发的个人素养去判断，一不留神，好不容易做的优化就又乱了
 - 相同方法的实现在分类之间会互相覆盖，所以只能通过 **别名**（如加前缀）的方法实现，再统一调用，但最终会导致主类中引入大量的分类，和方法调用逻辑
-
-
 
 ## 思考
 
@@ -49,29 +43,25 @@
 2. 通过一个**管理类**来代替原有的`AppDelegate`，使得该**管理类**可以分发生命周期的各方法到对应**代理类**
 3. 在若干**代理类**中标记一个**主代理**，做一些统筹，或`UIWindow`的实例化等操作
 4. `main.m`文件中，改用**代理类**
-```
-int main(int argc, char * argv[]) {
-@autoreleasepool {
-// 之前的用法
-// return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-
-// 改用 管理类
-return UIApplicationMain(argc, argv, nil, NSStringFromClass([AMKApplicationDelegate class]));
-}
-}
-```
+  ```
+  int main(int argc, char * argv[]) {
+      @autoreleasepool {
+          // 之前的用法
+          // return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+      
+          // 改用 管理类
+          return UIApplicationMain(argc, argv, nil, NSStringFromClass([AMKApplicationDelegate class]));
+      }
+  }
+  ```
 
 如下是新方案与目前现有开源的解决方案的优劣势对比：
 
 ![b3e88078de6729ac9e0a374bf0b450e68a5d998e.png](https://upload-images.jianshu.io/upload_images/294630-1c30edc6b9839145.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
-
 ## 核心代码
 
 > 注：该项目在 Xcode Version 9.2 上开发，目标支持iOS8+，没有测试更早的iOS版本。
-
-
 
 ### AMKApplicationDelegate.h
 
@@ -101,8 +91,6 @@ return UIApplicationMain(argc, argv, nil, NSStringFromClass([AMKApplicationDeleg
 
 ```
 
-
-
 ### AMKApplicationDelegate.m
 
 ```
@@ -118,40 +106,40 @@ return UIApplicationMain(argc, argv, nil, NSStringFromClass([AMKApplicationDeleg
 @synthesize applicationDelegates = _applicationDelegates;
 
 - (UIWindow *)window {
-return self.mainApplicationDelegate.window;
+    return self.mainApplicationDelegate.window;
 }
 
 #pragma mark -- Public Methods --
 
 + (AMKApplicationDelegate *)sharedInstance {
-static AMKApplicationDelegate *sharedInstance = nil;
-static dispatch_once_t onceToken;
-dispatch_once(&onceToken, ^{
-sharedInstance = [[self alloc] init];
-});
-return sharedInstance;
+    static AMKApplicationDelegate *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
 }
 
 - (UIResponder<UIApplicationDelegate> *)mainApplicationDelegate {
-static UIResponder<UIApplicationDelegate> *mainApplicationDelegate = nil;
-static dispatch_once_t onceToken;
-dispatch_once(&onceToken, ^{
-// 查找主代理
-for (UIResponder<UIApplicationDelegate> *applicationDelegate in self.applicationDelegates) {
-if ([applicationDelegate conformsToProtocol:@protocol(AMKMainApplicationDelegate)] && [applicationDelegate isKindOfClass:UIResponder.class]) {
-// 断言
-NSAssert(mainApplicationDelegate==nil, @"`AMKMainApplicationDelegate` 协议的实现类有且仅有一个");
-
-// 赋值主代理
-mainApplicationDelegate = applicationDelegate;
-}
-}
-
-// 主代理有效性判断
-NSAssert(mainApplicationDelegate!=nil, @"`AMKMainApplicationDelegate` 协议的实现类有且仅有一个, 且为`UIResponder`子类");
-
-});
-return mainApplicationDelegate;
+    static UIResponder<UIApplicationDelegate> *mainApplicationDelegate = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // 查找主代理
+        for (UIResponder<UIApplicationDelegate> *applicationDelegate in self.applicationDelegates) {
+            if ([applicationDelegate conformsToProtocol:@protocol(AMKMainApplicationDelegate)] && [applicationDelegate isKindOfClass:UIResponder.class]) {
+                // 断言
+                NSAssert(mainApplicationDelegate==nil, @"`AMKMainApplicationDelegate` 协议的实现类有且仅有一个");
+                
+                // 赋值主代理
+                mainApplicationDelegate = applicationDelegate;
+            }
+        }
+        
+        // 主代理有效性判断
+        NSAssert(mainApplicationDelegate!=nil, @"`AMKMainApplicationDelegate` 协议的实现类有且仅有一个, 且为`UIResponder`子类");
+        
+    });
+    return mainApplicationDelegate;
 }
 
 @end
@@ -164,12 +152,12 @@ return mainApplicationDelegate;
 
 // 当应用程序启动完毕的时候就会调用(系统自动调用)
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
-BOOL flag = YES;
-for (id<UIApplicationDelegate> applicationDelegate in self.applicationDelegates) {
-if (![applicationDelegate respondsToSelector:@selector(application:didFinishLaunchingWithOptions:)]) continue;
-flag = flag && [applicationDelegate application:application didFinishLaunchingWithOptions:launchOptions];
-}
-return flag;
+    BOOL flag = YES;
+    for (id<UIApplicationDelegate> applicationDelegate in self.applicationDelegates) {
+        if (![applicationDelegate respondsToSelector:@selector(application:didFinishLaunchingWithOptions:)]) continue;
+        flag = flag && [applicationDelegate application:application didFinishLaunchingWithOptions:launchOptions];
+    }
+    return flag;
 }
 
 ...
@@ -177,8 +165,6 @@ return flag;
 @end
 
 ```
-
-
 
 ## 使用
 
@@ -203,9 +189,9 @@ pod 'AMKApplicationDelegate'
 #import "AMKAppDelegate.h"
 
 int main(int argc, char * argv[]) {
-@autoreleasepool {
-return UIApplicationMain(argc, argv, nil, NSStringFromClass(AMKApplicationDelegate.class));
-}
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass(AMKApplicationDelegate.class));
+    }
 }
 ```
 
@@ -229,12 +215,12 @@ return UIApplicationMain(argc, argv, nil, NSStringFromClass(AMKApplicationDelega
 @implementation AMKApplicationDelegate (Demo)
 
 - (instancetype)init {
-if (self = [super init]) {
-NSMutableArray *applicationDelegates = [NSMutableArray array];
-[applicationDelegates addObject:AMKAppDelegate.new];
-self->_applicationDelegates = applicationDelegates;
-}
-return self;
+    if (self = [super init]) {
+        NSMutableArray *applicationDelegates = [NSMutableArray array];
+        [applicationDelegates addObject:AMKAppDelegate.new];
+        self->_applicationDelegates = applicationDelegates;
+    }
+    return self;
 }
 
 @end
@@ -281,50 +267,50 @@ NSString * const AMKApplicationShortcutItemMessageUserInfoKey = @"message";
 
 /** 快捷入口 */
 - (void)setupShortcutItems {
-if ([[UIApplication sharedApplication] respondsToSelector:@selector(shortcutItems)]) {
-NSMutableArray *shortcutItems = [NSMutableArray array];
-
-[shortcutItems addObject:({
-NSString *type = @"shortcutItem1";
-NSString *title = @"签到";
-NSString *subtitle = @"我是快捷操作描述";
-NSString *message = [NSString stringWithFormat:@"您点击了“%@”的快捷方式", title];
-
-NSMutableDictionary *userInfo = @{}.mutableCopy;
-userInfo[AMKApplicationShortcutItemTitleUserInfoKey] = title;
-userInfo[AMKApplicationShortcutItemMessageUserInfoKey] = message;
-
-UIApplicationShortcutItem *shortcutItem = [[UIApplicationShortcutItem alloc] initWithType:type localizedTitle:title localizedSubtitle:subtitle icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@""] userInfo:userInfo];
-shortcutItem;
-})];
-
-[shortcutItems addObject:({
-NSString *type = @"shortcutItem2";
-NSString *title = @"查找";
-NSString *subtitle = @"我是快捷操作描述";
-NSString *message = [NSString stringWithFormat:@"您点击了“%@”的快捷方式", title];
-
-NSMutableDictionary *userInfo = @{}.mutableCopy;
-userInfo[AMKApplicationShortcutItemTitleUserInfoKey] = title;
-userInfo[AMKApplicationShortcutItemMessageUserInfoKey] = message;
-
-UIApplicationShortcutItem *shortcutItem = [[UIApplicationShortcutItem alloc] initWithType:type localizedTitle:title localizedSubtitle:subtitle icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@""] userInfo:userInfo];
-shortcutItem;
-})];
-
-[UIApplication sharedApplication].shortcutItems = shortcutItems;
-}
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(shortcutItems)]) {
+        NSMutableArray *shortcutItems = [NSMutableArray array];
+        
+        [shortcutItems addObject:({
+            NSString *type = @"shortcutItem1";
+            NSString *title = @"签到";
+            NSString *subtitle = @"我是快捷操作描述";
+            NSString *message = [NSString stringWithFormat:@"您点击了“%@”的快捷方式", title];
+            
+            NSMutableDictionary *userInfo = @{}.mutableCopy;
+            userInfo[AMKApplicationShortcutItemTitleUserInfoKey] = title;
+            userInfo[AMKApplicationShortcutItemMessageUserInfoKey] = message;
+            
+            UIApplicationShortcutItem *shortcutItem = [[UIApplicationShortcutItem alloc] initWithType:type localizedTitle:title localizedSubtitle:subtitle icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@""] userInfo:userInfo];
+            shortcutItem;
+        })];
+        
+        [shortcutItems addObject:({
+            NSString *type = @"shortcutItem2";
+            NSString *title = @"查找";
+            NSString *subtitle = @"我是快捷操作描述";
+            NSString *message = [NSString stringWithFormat:@"您点击了“%@”的快捷方式", title];
+            
+            NSMutableDictionary *userInfo = @{}.mutableCopy;
+            userInfo[AMKApplicationShortcutItemTitleUserInfoKey] = title;
+            userInfo[AMKApplicationShortcutItemMessageUserInfoKey] = message;
+            
+            UIApplicationShortcutItem *shortcutItem = [[UIApplicationShortcutItem alloc] initWithType:type localizedTitle:title localizedSubtitle:subtitle icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@""] userInfo:userInfo];
+            shortcutItem;
+        })];
+        
+        [UIApplication sharedApplication].shortcutItems = shortcutItems;
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
-[self setupShortcutItems];
-return YES;
+    [self setupShortcutItems];
+    return YES;
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
-NSString *title = [shortcutItem.userInfo objectForKey:AMKApplicationShortcutItemTitleUserInfoKey];
-NSString *message = [shortcutItem.userInfo objectForKey:AMKApplicationShortcutItemMessageUserInfoKey];
-[[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    NSString *title = [shortcutItem.userInfo objectForKey:AMKApplicationShortcutItemTitleUserInfoKey];
+    NSString *message = [shortcutItem.userInfo objectForKey:AMKApplicationShortcutItemMessageUserInfoKey];
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 @end
@@ -342,19 +328,17 @@ NSString *message = [shortcutItem.userInfo objectForKey:AMKApplicationShortcutIt
 @implementation AMKApplicationDelegate (Demo)
 
 - (instancetype)init {
-if (self = [super init]) {
-NSMutableArray *applicationDelegates = [NSMutableArray array];
-[applicationDelegates addObject:AMKAppDelegate.new];
-[applicationDelegates addObject:AMKApplicationShortcutManager.new]; // 注册 3D-Touch快捷方式
-self->_applicationDelegates = applicationDelegates;
-}
-return self;
+    if (self = [super init]) {
+        NSMutableArray *applicationDelegates = [NSMutableArray array];
+        [applicationDelegates addObject:AMKAppDelegate.new];
+        [applicationDelegates addObject:AMKApplicationShortcutManager.new]; // 注册 3D-Touch快捷方式
+        self->_applicationDelegates = applicationDelegates;
+    }
+    return self;
 }
 
 @end
 ```
-
-
 
 ### 执行结果
 
@@ -362,8 +346,6 @@ return self;
 
 > 图片有点大，若加载失败 请前往如下地址查看：
 > https://github.com/AndyM129/AMKApplicationDelegate/blob/master/demo.gif 
-
-
 
 ## 后话
 
