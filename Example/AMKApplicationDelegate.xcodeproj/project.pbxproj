@@ -25,6 +25,8 @@
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		882CD63B209B368300738368 /* AMKAppDelegate+LanuchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 882CD63A209B368300738368 /* AMKAppDelegate+LanuchAd.m */; };
 		882CD63E209B36C800738368 /* AMKAppDelegate+UserNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 882CD63D209B36C800738368 /* AMKAppDelegate+UserNotification.m */; };
+		88FFB51921FAF18B00728783 /* AMKApplicationDelegate+Demo.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FFB51821FAF18B00728783 /* AMKApplicationDelegate+Demo.m */; };
+		88FFB51C21FAF45200728783 /* AMKApplicationShortcutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FFB51B21FAF45200728783 /* AMKApplicationShortcutManager.m */; };
 		D22E3719D07A5EA863A722BE /* Pods_AMKApplicationDelegate_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE3E0E921AF97A59245502C /* Pods_AMKApplicationDelegate_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +70,12 @@
 		882CD63A209B368300738368 /* AMKAppDelegate+LanuchAd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AMKAppDelegate+LanuchAd.m"; sourceTree = "<group>"; };
 		882CD63C209B36C800738368 /* AMKAppDelegate+UserNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AMKAppDelegate+UserNotification.h"; sourceTree = "<group>"; };
 		882CD63D209B36C800738368 /* AMKAppDelegate+UserNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AMKAppDelegate+UserNotification.m"; sourceTree = "<group>"; };
+		88FFB51721FAF18B00728783 /* AMKApplicationDelegate+Demo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AMKApplicationDelegate+Demo.h"; sourceTree = "<group>"; };
+		88FFB51821FAF18B00728783 /* AMKApplicationDelegate+Demo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AMKApplicationDelegate+Demo.m"; sourceTree = "<group>"; };
+		88FFB51A21FAF45200728783 /* AMKApplicationShortcutManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMKApplicationShortcutManager.h; sourceTree = "<group>"; };
+		88FFB51B21FAF45200728783 /* AMKApplicationShortcutManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMKApplicationShortcutManager.m; sourceTree = "<group>"; };
 		8D8CC880D261EB38A5AECCCA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		9AD85CD457A9213C995B79B2 /* AMKApplicationDelegate.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AMKApplicationDelegate.podspec; path = ../AMKApplicationDelegate.podspec; sourceTree = "<group>"; };
+		9AD85CD457A9213C995B79B2 /* AMKApplicationDelegate.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AMKApplicationDelegate.podspec; path = ../AMKApplicationDelegate.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BA0CD6F6124F2C5F8039850D /* Pods-AMKApplicationDelegate_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AMKApplicationDelegate_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AMKApplicationDelegate_Tests/Pods-AMKApplicationDelegate_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE68B3B5EAA57AD9866B5D76 /* Pods-AMKApplicationDelegate_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AMKApplicationDelegate_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AMKApplicationDelegate_Tests/Pods-AMKApplicationDelegate_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E8DBEFB2A9BB1E7D5F82C85B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -144,6 +150,8 @@
 				882CD63A209B368300738368 /* AMKAppDelegate+LanuchAd.m */,
 				882CD63C209B36C800738368 /* AMKAppDelegate+UserNotification.h */,
 				882CD63D209B36C800738368 /* AMKAppDelegate+UserNotification.m */,
+				88FFB51A21FAF45200728783 /* AMKApplicationShortcutManager.h */,
+				88FFB51B21FAF45200728783 /* AMKApplicationShortcutManager.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* AMKViewController.h */,
 				6003F5A6195388D20070C39A /* AMKViewController.m */,
@@ -161,6 +169,8 @@
 				6003F595195388D20070C39A /* AMKApplicationDelegate-Info.plist */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
+				88FFB51721FAF18B00728783 /* AMKApplicationDelegate+Demo.h */,
+				88FFB51821FAF18B00728783 /* AMKApplicationDelegate+Demo.m */,
 				6003F59B195388D20070C39A /* AMKApplicationDelegate-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -218,7 +228,6 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				A974F20D5E7F875A81032F85 /* [CP] Embed Pods Frameworks */,
-				6A5E094FA987955ADB9117C7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -237,8 +246,6 @@
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
-				547A9D8AE9AA0387C1303206 /* [CP] Embed Pods Frameworks */,
-				6F87121EE9420FAC8AAE5106 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -328,51 +335,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		547A9D8AE9AA0387C1303206 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AMKApplicationDelegate_Tests/Pods-AMKApplicationDelegate_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6A5E094FA987955ADB9117C7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AMKApplicationDelegate_Example/Pods-AMKApplicationDelegate_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6F87121EE9420FAC8AAE5106 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AMKApplicationDelegate_Tests/Pods-AMKApplicationDelegate_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9A502FEBBF3DAFAC65F520CB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -416,9 +378,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88FFB51921FAF18B00728783 /* AMKApplicationDelegate+Demo.m in Sources */,
 				882CD63B209B368300738368 /* AMKAppDelegate+LanuchAd.m in Sources */,
 				6003F59E195388D20070C39A /* AMKAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* AMKViewController.m in Sources */,
+				88FFB51C21FAF45200728783 /* AMKApplicationShortcutManager.m in Sources */,
 				882CD63E209B36C800738368 /* AMKAppDelegate+UserNotification.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);

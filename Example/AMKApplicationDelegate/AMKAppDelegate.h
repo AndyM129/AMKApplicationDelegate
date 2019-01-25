@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AMKApplicationDelegate/AMKApplicationDelegate.h>
+#import "AMKApplicationDelegate.h"
 
 @interface AMKAppDelegate : UIResponder <UIApplicationDelegate, AMKMainApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;

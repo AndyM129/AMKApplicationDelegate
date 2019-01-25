@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'AMKApplicationDelegate'
-    s.version          = '0.1.0'
+    s.version          = '0.1.1'
     s.summary          = 'A short description of AMKApplicationDelegate.'
     s.description      =  <<-DESC
                             TODO: A pod of AMKApplicationDelegate.

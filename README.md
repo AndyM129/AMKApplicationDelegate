@@ -12,7 +12,15 @@
 
 ## 介绍
 
-无侵入实现AppDelegate瘦身，详见[《老生常谈 之 “AppDelegate瘦身”》](https://www.jianshu.com/p/666cbd2b7ec8)。
+在iOS项目的开发中，AppDelegate是一个耦合发生的重灾地，很多项目的开发时间一长，AppDelegate就不可避免地出现，代码臃肿，调用顺序混乱，逻辑复杂的问题。
+
+因此，可通过 `AMKApplicationDelegate` 无侵入的实现AppDelegate瘦身。
+
+
+
+##优势 
+
+如下是与目前现有开源的解决方案的优劣势对比：
 
 
 
