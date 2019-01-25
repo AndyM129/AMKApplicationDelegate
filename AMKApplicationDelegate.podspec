@@ -19,11 +19,10 @@ Pod::Spec.new do |s|
     s.source           = { :git => 'https://github.com/AndyM129/AMKApplicationDelegate.git', :tag => s.version.to_s }
     s.ios.deployment_target = '8.0'
     s.source_files = [
-        'AMKApplicationDelegate/Classes/AMKApplicationDelegate.{h,m}',
-        'AMKApplicationDelegate/Classes/UIApplication+AMKApplicationDelegate.{h,m}'
+        'AMKApplicationDelegate/Classes/*.{h,m}',
     ]
     s.public_header_files = [
-        'AMKApplicationDelegate/Classes/AMKApplicationDelegate.h'
+        'AMKApplicationDelegate/Classes/*.h'
     ]
 end
 
